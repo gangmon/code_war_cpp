@@ -1,3 +1,5 @@
 cmake-build-debug
 CMakeFiles
 codeWar
+.DS_Store
+.idea
