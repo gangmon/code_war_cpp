@@ -15,34 +15,60 @@ public:
 
 };
 
+std::vector<std::string> sort_arr(std::vector<std::string> &arr)
+{
+    for (size_t i = 0; i < arr.size(); i++)
+    {
+        for (size_t j = i; j < arr.size(); j++)
+        {
+            if (arr[i] > arr[j])
+            {
+                std::string temp = arr[i];
+                arr[i] = arr[j];
+                arr[j] = temp;
+            }
+        }
+    }
+    return arr;
+}
+
 std::vector<std::string> WhichAreIn::inArray(std::vector<std::string> &array1, std::vector<std::string> &array2)
 {
+    std::vector<std::string> res{};
 
     for (const auto  &s : array1)
     {
         for (const auto  &s2: array2)
         {
-            for (const auto  &sink :s)
+            bool flag = false;
+            int pos = 0;
+            int start1 = 0;
+            int start2 = 0;
+            for (; start1 < s.length() && start2 < s2.length();)
             {
-                bool flag = false;
-                for (const auto  &sink2 : s2)
-                {
-                    if (sink == sink2){
-                        flag = true;
-                        break;
-                    } else {
-                        flag = false;
-                    }
+                if (s[start1] == s2[start2]){
+                    flag = true;
+                    start2 ++;
+                    start1 ++;
+                    pos ++;
+                } else {
+                    flag = false;
+                    start2 ++;
+                    pos = 0;
                 }
-                if (!flag)
-                {
+            }
 
-                }
+            if (flag && pos == s.length()){
+                res.push_back(s);
+                break;
             }
         }
     }
 
-    std::cout << std::endl;
-    return array1;
+
+    sort_arr(res);
+    return res;
 }
+
+
 

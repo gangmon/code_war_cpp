@@ -3,3 +3,4 @@ CMakeFiles
 codeWar
 .DS_Store
 .idea
+.cmake

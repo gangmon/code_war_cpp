@@ -19,4 +19,4 @@ add_executable(
         header/convert_string_to_camel_case.h
         header/calc.h
         header/common_denominators.h
-        header/counting_deplicates.h header/which_are_in.h)
+        header/counting_deplicates.h header/which_are_in.h header/parse_int_reload.h)
