@@ -10,10 +10,30 @@
 #include "header/which_are_in.h"
 #include <string>
 #include "header/parse_int_reload.h"
+#include "header/sort.h"
+#include "header/binary_tree.h"
 
 using namespace std;
 
 int main() {
+
+    //[3,9,20,null,null,15,7]
+    TreeNode* root = new TreeNode(3, new TreeNode(9), new TreeNode(20, new TreeNode(15), new TreeNode(7)));
+    traverse(root);
+    cout << endl;
+    auto res = lever_order_by_recursion(root);
+    for (const auto &r : res) {
+        for (const auto &i : r) {
+            cout << i << " ";
+        }
+        cout << endl;
+    }
+
+//    // [3,2,4]
+//    ListNode* head = new ListNode(3, new ListNode(2, new ListNode(4)));
+//    printList(head);
+//    auto res = reverse(head);
+//    printList(res);
 //    std::string input = "one thousand three hundred and thirty-seven";
 //    int res = parse_int(input);
 //    cout << res << endl;
