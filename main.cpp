@@ -18,7 +18,10 @@ using namespace std;
 int main() {
 
     //[3,9,20,null,null,15,7]
-    TreeNode* root = new TreeNode(3, new TreeNode(9), new TreeNode(20, new TreeNode(15), new TreeNode(7)));
+//    TreeNode* root = new TreeNode(3, new TreeNode(9), new TreeNode(20, new TreeNode(15), new TreeNode(7)));
+
+    //[1,2,3,4,5]
+    TreeNode* root = new TreeNode(1, new TreeNode(2, new TreeNode(4), new TreeNode(5)), new TreeNode(3));
     traverse(root);
     cout << endl;
     auto res = lever_order_by_recursion(root);

@@ -108,12 +108,12 @@ vector<vector<int>> lever_order_by_recursion(TreeNode* head) {
 void level_by_recursion(TreeNode* head, int level, vector<vector<int>> &res) {
 
     if (head == nullptr) return ;
-    if (level == res.size()) {
+    if (level <= res.size()) {
         res[level-1].push_back(head->val);
     } else {
-        vector<int> level;
-        level.push_back(head->val);
-        res.push_back(level);
+        vector<int> vec;
+        vec.push_back(head->val);
+        res.push_back(vec);
     }
     level_by_recursion(head->left, level + 1, res);
     level_by_recursion(head->right, level + 1, res);
