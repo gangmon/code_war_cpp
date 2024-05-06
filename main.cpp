@@ -12,11 +12,17 @@
 #include "header/parse_int_reload.h"
 #include "header/sort.h"
 #include "header/binary_tree.h"
+#include "header/rand.h"
+#include "header/sort.h"
 
 using namespace std;
 
 int main() {
 
+    Solution s;
+    s.sortArray({5,2,3,1});
+
+    randn();
     //[3,9,20,null,null,15,7]
 //    TreeNode* root = new TreeNode(3, new TreeNode(9), new TreeNode(20, new TreeNode(15), new TreeNode(7)));
 
@@ -24,7 +30,7 @@ int main() {
     TreeNode* root = new TreeNode(1, new TreeNode(2, new TreeNode(4), new TreeNode(5)), new TreeNode(3));
     traverse(root);
     cout << endl;
-    auto res = lever_order_by_recursion(root);
+    auto res = level_order_from_bottom(root);
     for (const auto &r : res) {
         for (const auto &i : r) {
             cout << i << " ";

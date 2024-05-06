@@ -120,3 +120,50 @@ void level_by_recursion(TreeNode* head, int level, vector<vector<int>> &res) {
 
     return ;
 }
+
+
+vector<vector<int>> level_order_from_button_by_gpt(TreeNode* root){
+    vector<vector<int>> res;
+    if (root == nullptr) return res;
+    vector<TreeNode*> queue;
+    queue.push_back(root);
+    while (!queue.empty()) {
+        vector<int> level;
+        int size = queue.size();
+        for (int i = 0; i < size; i++) {
+            TreeNode* node = queue.front();
+            queue.erase(queue.begin());
+            level.push_back(node->val);
+            if (node->left != nullptr) queue.push_back(node->left);
+            if (node->right != nullptr) queue.push_back(node->right);
+        }
+        res.insert(res.begin(), level);
+    }
+    return res;
+}
+
+vector<vector<int>> level_order_from_bottom(TreeNode* root) {
+    vector<vector<int>> res;
+    if (root == nullptr) return res;
+    vector<vector<TreeNode*>> tower;
+    vector<TreeNode*> level;
+    level.push_back(root);
+    tower.push_back(level);
+    for (size_t i = 0; i < tower.size(); i++) {
+        vector<TreeNode*> cur_level;
+        for (size_t j = 0; j < tower[i].size(); j++) {
+            if (tower[i][j]->left != nullptr) cur_level.push_back(tower[i][j]->left);
+            if (tower[i][j]->right != nullptr) cur_level.push_back(tower[i][j]->right);
+        }
+        tower.push_back(cur_level);
+    }
+
+    for (size_t i = tower.size(); i > 0; i -- ) {
+        vector<int> l;
+        for (size_t j = 0; j < tower[i-1].size(); j++) {
+            l.push_back(tower[i-1][j]->val);
+        }
+        res.push_back(l);
+    }
+    return res;
+}
