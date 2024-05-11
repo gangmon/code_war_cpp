@@ -167,3 +167,176 @@ vector<vector<int>> level_order_from_bottom(TreeNode* root) {
     }
     return res;
 }
+
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+
+TreeNode* mirrorTree(TreeNode* root) {
+    if (root == nullptr) return nullptr;
+    TreeNode* left = mirrorTree(root->left);
+    TreeNode* right = mirrorTree(root->right);
+    root->left = right;
+    root->right = left;
+    return root;
+}
+
+
+TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+    if (root == nullptr) return nullptr;
+    if (root == p || root == q) return root;
+    TreeNode* left = lowestCommonAncestor(root, p, q);
+    TreeNode* right = lowestCommonAncestor(root, p, q);
+
+    if (left && right) return root;
+    return left == nullptr ? right : left;
+}
+int treeDepth(TreeNode* root) {
+    if (root == nullptr) return 0;
+    int left = treeDepth(root->left);
+    int right = treeDepth(root->right);
+    return max(left, right) + 1;
+}
+
+// 输入一棵二叉树的根节点，判断该树是不是平衡二叉树。如果某二叉树中任意节点的左右子树的深度相差不超过1，那么它就是一棵平衡二叉树。
+bool isBalanced(TreeNode* root) {
+    if (root == nullptr) return true;
+    if (abs(treeDepth(root->left) - treeDepth(root->right)) > 1) return false;
+    return isBalanced(root->left) && isBalanced(root->right);
+}
+
+
+TreeNode* constructMaximumBinaryTree(vector<int>& nums) {
+    if (nums.empty()) return nullptr;
+    int max_val = INT_MIN;
+    int max_index = 0;
+    for (size_t i = 0; i < nums.size(); i++) {
+        if (nums[i] > max_val) {
+            max_val = nums[i];
+            max_index = i;
+        }
+    }
+    TreeNode* root = new TreeNode(max_val);
+    vector<int> left(nums.begin(), nums.begin() + max_index);
+    vector<int> right(nums.begin() + max_index + 1, nums.end());
+    root->left = constructMaximumBinaryTree(left);
+    root->right = constructMaximumBinaryTree(right);
+    return root;
+}
+
+TreeNode* pruneTree(TreeNode* root) {
+
+}
+
+int maxPathSumFromRoot(TreeNode* root) {
+    if (root == nullptr) return 0;
+    int left = maxPathSumFromRoot(root->left);
+    int right = maxPathSumFromRoot(root->right);
+    return max(left, right) + root->val;
+}
+
+int maxPathSumOne(TreeNode* root) {
+    if (root == nullptr) return 0;
+    int left = maxPathSumFromRoot(root->left);
+    int right = maxPathSumFromRoot(root->right);
+
+    return root->val + left + right;
+}
+
+int maxPathSum(TreeNode* root) {
+    if (root == nullptr) return INT_MIN;
+    int left = maxPathSumOne(root->left);
+    int right = maxPathSumOne(root->right);
+
+
+    return max(left+right+root->val,max(maxPathSum(root->left), maxPathSum(root->right)));
+}
+
+
+
+class Solution2 {
+private:
+    int maxSum = INT_MIN;
+
+public:
+    int maxGain(TreeNode* node) {
+        if (node == nullptr) {
+            return 0;
+        }
+
+        // 递归计算左右子节点的最大贡献值
+        // 只有在最大贡献值大于 0 时，才会选取对应子节点
+        int leftGain = max(maxGain(node->left), 0);
+        int rightGain = max(maxGain(node->right), 0);
+
+        // 节点的最大路径和取决于该节点的值与该节点的左右子节点的最大贡献值
+        int priceNewpath = node->val + leftGain + rightGain;
+
+        // 更新答案
+        maxSum = max(maxSum, priceNewpath);
+
+        // 返回节点的最大贡献值
+        return node->val + max(leftGain, rightGain);
+    }
+
+    int maxPathSum(TreeNode* root) {
+        maxGain(root);
+        return maxSum;
+    }
+};
+
+int josephus(int n, int k) {
+    if (n == 1) return 0;
+
+    return (josephus(n-1, k) + k) % n;
+}
+
+int josephus2(int n, int k) {
+    vector<int> people;
+    for (int i = 1; i <= n; i ++){
+        people.push_back(i);
+    }
+    while (people.size() > 1){
+        while (people.size() > k) {
+            people.erase(people.begin() + k -1 );
+        }
+        people.erase(people.begin() + k % people.size() -1 );
+    }
+    return people[0];
+}
+
+int findTheWinner(int n, int k) {
+    vector<int> people;
+    for (int i = 1; i <= n; i ++){
+        people.push_back(i);
+    }
+    int count = 0;
+
+    while (people.size() > 1) {
+        for (int p = 1; p <= people.size() && people.size() > 1; p++) {
+            count++;
+            if (count % k == 0) {
+                people.erase(people.begin() + p - 1);
+                p--;
+            }
+        }
+    }
+    return people[0];
+}
+
+vector<int> findPeaks(vector<int>& mountain) {
+    vector<int> res;
+    for (size_t i = 1; i < mountain.size() - 1; i ++ ) {
+        if (mountain[i] > mountain[i-1] && mountain[i] > mountain[i+1]){
+            res.push_back(i);
+        }
+    };
+
+    return res;
+}
