@@ -25,3 +25,32 @@ void randn() {
     int random_number2 = dis(gen);
     std::cout << "Random number: " << random_number << "," << random_number2 << std::endl;
 }
+
+//class ListNode {
+//    int val;
+//    ListNode* next;
+//    ListNode(int x) : val(x), next(nullptr) {}
+//    ListNode(int x, ListNode* next) : val(x), next(next) {}
+//};
+
+int find_one(int n, int k) {
+    ListNode *head = new ListNode(0);
+    ListNode *current = head;
+    for (int i = 1; i <= n ; i ++ ){
+        current->next = new ListNode(i);
+        current = current->next;
+    }
+    current->next = head->next;
+    ListNode *counting = head->next;
+    for (int i = 1; current != counting; i ++) {
+        if (i == k) {
+            i = 0;
+            current->next = counting->next;
+        } else {
+            counting = counting->next;
+            current = current->next;
+        }
+    }
+    return counting->val;
+}
+
