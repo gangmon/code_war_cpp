@@ -330,6 +330,47 @@ int findTheWinner(int n, int k) {
     return people[0];
 }
 
+int findTheWinner2(int n, int k) {
+    vector<int> people;
+    for (int i =1; i <= n; i ++)
+    {
+        people.push_back(i);
+    }
+    int count = 0;
+
+    while (people.size() > 1) {
+
+        for (int pos = 1; pos <= people.size(); pos ++) {
+            count ++;
+            if (count % k == 0) {
+                people.erase(people.begin() + pos - 1);
+                pos --;
+            }
+        }
+    }
+    return people[0];
+}
+
+
+int findTheWinner3(int n, int k) {
+    ListNode *head = new ListNode(0);
+
+    ListNode *current = head;
+    for (int i = 1; i <= n; i ++) {
+        current->next = new ListNode(i);
+        current = current->next;
+    }
+    current->next = head->next;
+    ListNode *run = current;
+    for (int i = 1; run->next != run ; i ++) {
+        if (i % k == 0) {
+            run->next = run->next->next;
+        }
+        run = run->next;
+    }
+    return run->val;
+}
+
 vector<int> findPeaks(vector<int>& mountain) {
     vector<int> res;
     for (size_t i = 1; i < mountain.size() - 1; i ++ ) {
@@ -340,3 +381,5 @@ vector<int> findPeaks(vector<int>& mountain) {
 
     return res;
 }
+
+
